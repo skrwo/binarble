@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <title>Binardle</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="og:title" content="Binardle" />
+    <meta name="og:description" content="0️⃣0️⃣0️⃣1️⃣1️⃣0️⃣ Потрібна практика з переведення чисел із 10-ї у 2-ву систему числення?"/>
+    <link rel="icon" type="image/png" href="favicon-256x256.png" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      /* https://www.joshwcomeau.com/css/custom-css-reset/ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      *:not(dialog) {
+        margin: 0;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        html {
+          interpolate-size: allow-keywords;
+        }
+      }
+
+      body {
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      img,
+      picture,
+      video,
+      canvas,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+
+      input,
+      button,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        overflow-wrap: break-word;
+      }
+
+      p {
+        text-wrap: pretty;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-wrap: balance;
+      }
+
+      #root,
+      #__next {
+        isolation: isolate;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>У вас вимкнено JavaScript! Сайт не працює без нього…</noscript>
+    <div class="task">
+      <span>Введіть число</span>
+      <span contenteditable>12</span>
+      <span>у двійковій системі числення</span>
+    </div>
+    <div class="button-container">
+      <button class="redo">🎲</button>
+    </div>
+    <div class="input-container">
+      <input id="binary-input" type="text" maxlength="6" inputmode="decimal" autofocus autocomplete="off" value="" />
+      <div class="input-segment"></div>
+      <div class="input-segment"></div>
+      <div class="input-segment"></div>
+      <div class="input-segment"></div>
+      <div class="input-segment"></div>
+      <div class="input-segment"></div>
+    </div>
+    <div class="button-container">
+      <button class="check">Перевірити</button>
+    </div>
+  </body>
+</html>

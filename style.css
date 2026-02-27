@@ -1,0 +1,84 @@
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: Helvetica, Arial, sans-serif;
+    gap: 1em;
+    text-align: center;
+    min-height: 80vh;
+    padding: 10% 0;
+}
+
+button {
+    width: clamp(20vw, 30%, 80vw);
+    border: none;
+    border-radius: 1em;
+    padding: .5em 1em;
+    &:active {
+        outline: 2px solid currentColor;
+    }
+    @media (hover: hover) {
+        &:hover {
+            outline: 2px solid currentColor;
+        }
+    }
+}
+
+noscript {
+    background-color: orange;
+    font-weight: 800;
+    padding: 1em;
+}
+
+.task {
+    display: flex;
+    flex-direction: column;
+    :nth-child(2) {
+        font-size: 4em;
+        font-weight: 600;
+        cursor: default;
+    }
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2em;
+    justify-content: center;
+    font-size: clamp(2rem, 1.5385rem + 2.4615vw, 4rem);
+
+    padding-right: calc(10px + 0.2em);
+    input {
+        width: 10px;
+        height: 10px;
+        background-color: transparent;
+        color: transparent;
+        outline: none;
+        border: none;
+        cursor: default;
+    }
+    
+}
+
+.input-segment {
+    border-radius: 1em;
+    aspect-ratio: 1 / 1;
+    width: clamp(2rem, 1.5385rem + 2.4615vw, 4rem);
+    background-color: color-mix(in srgb, transparent, black 20%);
+
+    &.active {
+        outline: 2px solid currentColor;
+    }
+
+    &.correct {
+        background-color: #1ba11b;
+    }
+
+    &.wrong {
+        background-color: rgb(184, 184, 53);
+    }
+
+    &:empty::before {
+        content: "0";
+        color: color-mix(in srgb, currentColor 50%, transparent 50%);
+    }
+}
