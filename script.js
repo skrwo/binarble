@@ -1,3 +1,5 @@
+let checked = false
+
 window.onload = () => {
     const input = document.getElementById("binary-input");
     if (!input) return console.error("fuck there is no binary-input");
@@ -8,9 +10,9 @@ window.onload = () => {
     else task.innerText = getRandomTask()
     
     input.oninput = (event) => {
-        console.log(event)
         if (!(new Set(event.data).isSubsetOf(new Set(["0", "1"]))))
             input.value = input.value.slice(0, input.value.indexOf(event.data))
+        checked = false
         updateInputSegments(input.value)
     }
     input.value = "";
@@ -19,11 +21,12 @@ window.onload = () => {
 
     document.querySelector(".input-container")?.addEventListener("click", () => input.focus());
     
-    input.onblur = () => updateInputSegments(input.value, undefined, true);
+    input.onblur = () => updateInputSegments(input.value, checked ? parseInt(task.innerText) : undefined, true);
     input.onfocus = () => updateInputSegments(input.value);
 
     document.querySelector(".redo")?.addEventListener("click", () => {
         if (!task) return console.error("bruh cannot select the task number")
+        checked = false
         input.value = ""
         updateInputSegments(input.value)
         task.innerText = getRandomTask()
@@ -32,6 +35,7 @@ window.onload = () => {
 
     const check = () => {
         if (!task) return console.error("bruh cannot select the task number")
+        checked = true
         input.focus()
         updateInputSegments(input.value, parseInt(task.innerText))
     }
@@ -43,6 +47,7 @@ window.onload = () => {
         else if (["ArrowRight","ArrowLeft"].includes(event.key)) event.preventDefault() 
     }
 }
+
 /**
  * Updates styles and data for the input segments
  * @param {string} input 
@@ -60,7 +65,7 @@ function updateInputSegments(input, correctAnswer, removeActive = false) {
         if (index <= input.length - 1) div.innerText = input.at(index)
         else div.innerText = ""
     })
-    if (correctAnswer) {
+    if (correctAnswer != undefined) {
         const correctText = correctAnswer.toString(2).padStart(6, "0")
         segments.forEach((div, index) => {
             if ((input.at(index) ?? "0") !== correctText.at(index)) div.classList.add("wrong")
