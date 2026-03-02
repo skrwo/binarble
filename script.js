@@ -10,7 +10,7 @@ window.onload = () => {
     else task.innerText = getRandomTask()
     
     input.oninput = (event) => {
-        if (!(new Set(event.data).isSubsetOf(new Set(["0", "1"]))))
+        if (!(new Set(event.data).isSubsetOf(new Set("01"))))
             input.value = input.value.slice(0, input.value.indexOf(event.data))
         checked = false
         updateInputSegments(input.value)
@@ -28,6 +28,7 @@ window.onload = () => {
         if (!task) return console.error("bruh cannot select the task number")
         checked = false
         input.value = ""
+        input.readOnly = false
         updateInputSegments(input.value)
         task.innerText = getRandomTask()
         input.focus()
@@ -36,6 +37,7 @@ window.onload = () => {
     const check = () => {
         if (!task) return console.error("bruh cannot select the task number")
         checked = true
+        input.readOnly = true
         input.focus()
         updateInputSegments(input.value, parseInt(task.innerText))
     }
@@ -56,8 +58,13 @@ window.onload = () => {
  */
 function updateInputSegments(input, correctAnswer, removeActive = false) {
     const segments = document.querySelectorAll(".input-segment")
+    const inputElement = document.getElementById("binary-input")
     let activeSegmentIndex = input.length > 0 ? input.length - 1 : 0
-    if (activeSegmentIndex >= 0 && input.at(activeSegmentIndex)) activeSegmentIndex++
+    if (
+        activeSegmentIndex >= 0 &&
+        activeSegmentIndex < inputElement.maxLength - 1 &&
+        input.at(activeSegmentIndex)
+    ) activeSegmentIndex++
     segments.forEach((div, index) => {
         div.classList.remove("correct", "wrong")
         if (activeSegmentIndex !== index || removeActive) div.classList.remove("active")
