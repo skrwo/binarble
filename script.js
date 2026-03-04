@@ -1,4 +1,7 @@
+import { WebHaptics } from "https://unpkg.com/web-haptics@0.0.6/dist/index.mjs"
+
 let checked = false
+const haptics = new WebHaptics()
 
 window.onload = () => {
     const input = document.getElementById("binary-input");
@@ -22,7 +25,9 @@ window.onload = () => {
     document.querySelector(".input-container")?.addEventListener("click", () => input.focus());
     
     input.onblur = () => updateInputSegments(input.value, checked ? parseInt(task.innerText) : undefined, true);
-    input.onfocus = () => updateInputSegments(input.value);
+    input.onfocus = () => {
+        if (!input.readOnly) updateInputSegments(input.value)
+    };
 
     document.querySelector(".redo")?.addEventListener("click", () => {
         if (!task) return console.error("bruh cannot select the task number")
@@ -36,10 +41,24 @@ window.onload = () => {
 
     const check = () => {
         if (!task) return console.error("bruh cannot select the task number")
-        checked = true
         input.readOnly = true
         input.focus()
         updateInputSegments(input.value, parseInt(task.innerText))
+
+        // do haptic feedback
+        if (!checked) {
+            const hapticsFeedbacks = []
+            document.querySelectorAll(".input-segment").forEach((segment, index) => {
+                const isWrong = segment.classList.contains("wrong")
+                hapticsFeedbacks.push({
+                    duration: isWrong ? 50 : 30,
+                    delay: index > 0 ? 100 : 0,
+                    intensity: isWrong ? 1 : 0.25,
+                })
+            })
+            haptics.trigger(hapticsFeedbacks)
+        }
+        checked = true
     }
 
     document.querySelector(".check")?.addEventListener("click", check)
@@ -67,7 +86,7 @@ function updateInputSegments(input, correctAnswer, removeActive = false) {
     ) activeSegmentIndex++
     segments.forEach((div, index) => {
         div.classList.remove("correct", "wrong")
-        if (activeSegmentIndex !== index || removeActive) div.classList.remove("active")
+        if (activeSegmentIndex !== index || removeActive || correctAnswer != undefined) div.classList.remove("active")
         else div.classList.add("active")
         if (index <= input.length - 1) div.innerText = input.at(index)
         else div.innerText = ""

@@ -6,6 +6,9 @@ body {
     text-align: center;
     min-height: 80vh;
     padding: 10% 0;
+    @media (height < 400px) {
+        padding-top: 0;
+    }
 }
 
 button {
@@ -59,22 +62,39 @@ noscript {
     
 }
 
+@keyframes correct {
+    0%, 100% {
+        translate: 0 0;
+    }
+    50% {
+        translate: 0 -20%;
+    }
+}
+
 .input-segment {
     border-radius: 1em;
     aspect-ratio: 1 / 1;
     width: clamp(2rem, 1.5385rem + 2.4615vw, 4rem);
     background-color: color-mix(in srgb, transparent, black 20%);
-
+    
     &.active {
         outline: 2px solid currentColor;
     }
-
+    
     &.correct {
         background-color: #1ba11b;
+        animation-name: correct;
+        animation-delay: calc(sibling-index() * 0.1s);
+        animation-duration: 0.2s;
+        animation-timing-function: ease-in;
+        outline: 3px solid #136113;
+        transition: outline 0.2s ease-in;
     }
 
     &.wrong {
         background-color: rgb(184, 184, 53);
+        outline: 3px solid rgb(116, 107, 33);
+        transition: outline 0.2s ease-in;
     }
 
     &:empty::before {
