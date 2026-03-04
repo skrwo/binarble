@@ -30,7 +30,7 @@ window.onload = () => {
         if (!input.readOnly) updateInputSegments(input.value)
     }
 
-    document.querySelector(".redo")?.addEventListener("click", () => {
+    const redo = () => {
         if (!task) return console.error("bruh cannot select the task number")
         checked = false
         input.value = ""
@@ -38,7 +38,9 @@ window.onload = () => {
         updateInputSegments(input.value)
         task.innerText = getRandomTask()
         input.focus()
-    })
+    }
+
+    document.querySelector(".redo")?.addEventListener("click", redo)
 
     const check = () => {
         if (!task) return console.error("bruh cannot select the task number")
@@ -66,6 +68,7 @@ window.onload = () => {
 
     document.onkeydown = (event) => {
         if (event.key === "Enter") check()
+        else if (event.key.toLowerCase() === "r" || event.code === "KeyR") redo()
         else if (["ArrowRight", "ArrowLeft"].includes(event.key)) event.preventDefault()
     }
 }
