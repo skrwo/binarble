@@ -5,30 +5,30 @@ let checked = false
 const haptics = new WebHaptics()
 
 window.onload = () => {
-    const input = document.getElementById("binary-input");
-    if (!input) return console.error("fuck there is no binary-input");
+    const input = document.getElementById("binary-input")
+    if (!input) return console.error("fuck there is no binary-input")
 
-    const task = document.querySelector("div.task span[contenteditable]");
+    const task = document.querySelector("div.task span[contenteditable]")
     const n = new URLSearchParams(window.location.search).get("n")
     if (n && !isNaN(n)) task.innerText = parseInt(n)
     else task.innerText = getRandomTask()
-    
+
     input.oninput = (event) => {
         if (!(new Set(event.data).isSubsetOf(new Set("01"))))
             input.value = input.value.slice(0, input.value.indexOf(event.data))
         checked = false
         updateInputSegments(input.value)
     }
-    input.value = "";
-    input.focus();
-    updateInputSegments(input.value);
+    input.value = ""
+    input.focus()
+    updateInputSegments(input.value)
 
-    document.querySelector(".input-container")?.addEventListener("click", () => input.focus());
-    
-    input.onblur = () => updateInputSegments(input.value, checked ? parseInt(task.innerText) : undefined, true);
+    document.querySelector(".input-container")?.addEventListener("click", () => input.focus())
+
+    input.onblur = () => updateInputSegments(input.value, checked ? parseInt(task.innerText) : undefined, true)
     input.onfocus = () => {
         if (!input.readOnly) updateInputSegments(input.value)
-    };
+    }
 
     document.querySelector(".redo")?.addEventListener("click", () => {
         if (!task) return console.error("bruh cannot select the task number")
@@ -66,7 +66,7 @@ window.onload = () => {
 
     document.onkeydown = (event) => {
         if (event.key === "Enter") check()
-        else if (["ArrowRight","ArrowLeft"].includes(event.key)) event.preventDefault() 
+        else if (["ArrowRight", "ArrowLeft"].includes(event.key)) event.preventDefault()
     }
 }
 
