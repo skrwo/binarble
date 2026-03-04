@@ -1,3 +1,4 @@
+"use strict"
 import { WebHaptics } from "https://unpkg.com/web-haptics@0.0.6/dist/index.mjs"
 
 let checked = false
